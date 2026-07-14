@@ -1,0 +1,47 @@
+<!-- !!! GenAI eszköz segítségével készült fájl -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5">
+    <title>External System for Webhook</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #2b2b2b; color: #f1f1f1; padding: 20px; display: flex; justify-content: center; }
+        .card { background: #3c3c3c; padding: 30px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0,0,0,0.4); width: 100%; max-width: 500px; }
+        h1 { margin-top: 0; color: #4CAF50; border-bottom: 2px solid #555; padding-bottom: 10px; }
+        .property { margin-bottom: 15px; font-size: 16px; }
+        .label { font-weight: bold; color: #aaa; display: inline-block; width: 100px; }
+        .severity-Critical { color: #ff4d4d; font-weight: bold; }
+        .severity-High { color: #ffa500; font-weight: bold; }
+        .severity-Medium { color: #ffd700; font-weight: bold; }
+        .severity-Low { color: #4CAF50; font-weight: bold; }
+        pre { background: #1e1e1e; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #555; }
+        .waiting { text-align: center; color: #888; font-style: italic; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>External System with Webhook</h1>
+    
+    {% if incident %}
+        <div class="property"><span class="label">Key:</span> {{ incident.key }}</div>
+        <div class="property"><span class="label">Time:</span> {{ incident.timestamp }}</div>
+        <div class="property"><span class="label">Stream:</span> {{ incident.stream_id }}</div>
+        <div class="property"><span class="label">Severity:</span> 
+            <span class="severity-{{ incident.severity }}">{{ incident.severity }}</span>
+        </div>
+        <div class="property">
+            <span class="label">Details:</span>
+            <pre>{{ incident.details | tojson(indent=2) }}</pre>
+        </div>
+    {% else %}
+        <div class="waiting">
+            <p>Waiting for an incident to happen in the pipeline...</p>
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
